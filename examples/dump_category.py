@@ -1,4 +1,4 @@
-"""dump_category.py - utility script for mps_edits."""
+"""dump_category.py - utility script for wikitweets."""
 
 import sys
 import json

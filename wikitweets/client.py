@@ -1,4 +1,4 @@
-"""client.py - client for mps_edits"""
+"""client.py - client for wikitweets"""
 import os
 import re
 import sys
@@ -34,22 +34,23 @@ class EditsListener(irc.IRCClient):
 
     def __init__(self, cfg, twitter_api):
         self.nickname = cfg.irc.nick
-        self.mps = cfg.mps
-        self.twitter = twitter_api
+        self.articles = cfg.articles
+        self.message_fmt = cfg.twitter.message_fmt
+        self.twitter_api = twitter_api
 
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
-        log.info("connected")
+        log.info("Connected to IRC")
 
     def connectionLost(self, reason):
         irc.IRCClient.connectionLost(self, reason)
-        log.info("disconnected")
+        log.info("Disconnected from IRC")
 
     # callbacks for events
 
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
-        log.info('signed on')
+        log.info('Signed on to IRC')
         self.join(self.factory.channel)
 
     def privmsg(self, user, channel, msg):
@@ -66,15 +67,20 @@ class EditsListener(irc.IRCClient):
                 diffuri = m.group(2)
                 author = m.group(3)
                 log.debug(u"Noticed edit of %s by %s", article, author)
-                if article in self.mps:
-                    log.info(u"MP page %s edited by %s: %s", article, author, diffuri)
+                if article in self.articles:
+                    log.info(u"[%s] edited by %s: %s", article, author, diffuri)
                     by_msg = 'anonymously'
                     if not self.ip_re.match(author):
                         by_msg = 'by %s' % author
                     # TODO shorten if >140 chars
-                    self.twitter.PostUpdate(
-                        u"%s Wikipedia article edited %s %s" % (
-                            article, by_msg, diffuri))
+                    message = self.message_fmt % {
+                        'article': article,
+                        'author': author,
+                        'by': by_msg,
+                        'diffuri': diffuri,
+                    }
+                    if self.twitter_api is not None:
+                        self.twitter_api.PostUpdate(message)
 
     def alterCollidedNick(self, nickname):
         """Generate an altered version of a nickname that caused a collision
@@ -91,10 +97,10 @@ class EditsListenerFactory(protocol.ClientFactory):
     def __init__(self, cfg, twitter_api):
         self.channel = cfg.irc.channel
         self.cfg = cfg
-        self.twitter = twitter_api
+        self.twitter_api = twitter_api
 
     def buildProtocol(self, addr):
-        proto = EditsListener(self.cfg, self.twitter)
+        proto = EditsListener(self.cfg, self.twitter_api)
         proto.factory = self
         return proto
 
@@ -103,7 +109,7 @@ class EditsListenerFactory(protocol.ClientFactory):
         connector.connect()
 
     def clientConnectionFailed(self, connector, reason):
-        print "connection failed:", reason
+        print "IRC Connection failed:", reason
         reactor.stop()
 
 def usage():
@@ -112,17 +118,21 @@ def usage():
 Usage: %s [options] <config_file>
 
 Options:
+    --no-twitter    Don't post to twitter, just log the tweet text
     -h, --help      Show this message and exit
 """ % (sys.argv[0], sys.argv[0])
 
 def main():
-    """Main entry point for mps_edits"""
+    """Main entry point for wikitweets"""
+    do_twitter = True
     try:
-        opts, args = getopt.gnu_getopt(sys.argv[1:], 'h', ['help'])
+        opts, args = getopt.gnu_getopt(sys.argv[1:], 'h', ['help', 'no-twitter'])
         for o, a in opts:
             if o in ('-h', '--help'):
                 print usage()
                 return 0
+            if o in ('--no-twitter',):
+                do_twitter = False
         if len(args) != 1:
             raise getopt.GetoptError('config file required.')
         config_filename = args[0]
@@ -138,7 +148,8 @@ def main():
     # initialise config and logging
     try:
         cfg = config.Config(config_filename)
-        twisted_log.startLogging(sys.stdout)
+        #twisted_log.startLogging(sys.stdout)
+        logging.addLevelName(logging.INFO + 1, 'TWEET')
         logging.config.fileConfig(config_filename)
     except ConfigParser.NoSectionError, e:
         section = e.section
@@ -148,13 +159,15 @@ def main():
     log.debug('Starting up')
 
     # initialise Twitter API connection
-    twitter_api = twitter.Api(
-        consumer_key=cfg.twitter.consumer_key,
-        consumer_secret=cfg.twitter.consumer_secret,
-        access_token_key=cfg.twitter.access_token_key,
-        access_token_secret=cfg.twitter.access_token_secret)
-    user = twitter_api.VerifyCredentials()
-    log.info("Logged into twitter: %s", user)
+    twitter_api = None
+    if do_twitter:
+        twitter_api = twitter.Api(
+            consumer_key=cfg.twitter.consumer_key,
+            consumer_secret=cfg.twitter.consumer_secret,
+            access_token_key=cfg.twitter.access_token_key,
+            access_token_secret=cfg.twitter.access_token_secret)
+        user = twitter_api.VerifyCredentials()
+        log.info("Logged into twitter: %s", user)
 
     # create factory protocol and application
     f = EditsListenerFactory(cfg, twitter_api)

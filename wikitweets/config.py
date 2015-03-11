@@ -1,4 +1,4 @@
-"config.py - config options reader for mps_edits"
+"config.py - config options reader for wikitweets"
 import os
 import codecs
 import ConfigParser
@@ -11,6 +11,8 @@ class TwitterConfig(object):
         self.access_token_key = parser.get('twitter', 'access_token_key')
         self.access_token_secret = parser.get('twitter', 'access_token_secret')
 
+        self.message_fmt = parser.get('twitter', 'message', raw=True)
+
 class IRCConfig(object):
     """Wikimedia IRC config options."""
     def __init__(self, parser):
@@ -19,13 +21,13 @@ class IRCConfig(object):
         self.channel = parser.get('irc', 'channel')
         self.nick = parser.get('irc', 'nick')
 
-class MPsConfig(set):
-    """Subclass of set containing MPs to check."""
+class ArticlesConfig(set):
+    """Subclass of set, containing article names to check."""
     def __init__(self, parser, relpath):
-        super(MPsConfig, self).__init__()
-        mps_filename = os.path.abspath(os.path.expanduser(
-            parser.get('mps', 'file', vars={'here': relpath})))
-        for line in codecs.open(mps_filename, 'r', 'utf-8'):
+        super(ArticlesConfig, self).__init__()
+        articles_filename = os.path.abspath(os.path.expanduser(
+            parser.get('main', 'articles', vars={'here': relpath})))
+        for line in codecs.open(articles_filename, 'r', 'utf-8'):
             line = line.strip()
             if line and not line.startswith('#'):
                 self.add(line)
@@ -39,5 +41,5 @@ class Config(object):
 
         self.irc = IRCConfig(parser)
         self.twitter = TwitterConfig(parser)
-        self.mps = MPsConfig(parser, relpath)
+        self.articles = ArticlesConfig(parser, relpath)
 
