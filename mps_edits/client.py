@@ -1,8 +1,11 @@
 """client.py - client for mps_edits"""
+import os
 import re
 import sys
 import getopt
 import logging
+import logging.config
+import ConfigParser
 
 import twitter # pip install python-twitter
 from twisted.words.protocols import irc
@@ -12,20 +15,6 @@ from twisted.python import log as twisted_log
 from . import config
 
 log = logging.getLogger(__name__)
-
-def configure_logging():
-    """Set up logger, handler, and formatter."""
-    log.setLevel(logging.INFO)
-    # create console handler and set level to debug
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.DEBUG)
-    # create formatter
-    formatter = logging.Formatter(
-        '%(asctime)s %(name)s %(levelname)s %(message)s')
-    # add formatter to ch
-    console_handler.setFormatter(formatter)
-    # add ch to log
-    log.addHandler(console_handler)
 
 class EditsListener(irc.IRCClient):
     """IRC bot that listens to wikipedia edits."""
@@ -136,17 +125,26 @@ def main():
                 return 0
         if len(args) != 1:
             raise getopt.GetoptError('config file required.')
+        config_filename = args[0]
     except getopt.GetoptError, e:
         print >> sys.stderr, e
         print >> sys.stderr, usage()
         return 2
+    
+    if not os.path.exists(config_filename):
+        print >> sys.stderr, "E: Config file <%s> not found" % config_filename
+        return 1
 
-    # initialise config
-    cfg = config.Config(args[0])
+    # initialise config and logging
+    try:
+        cfg = config.Config(config_filename)
+        twisted_log.startLogging(sys.stdout)
+        logging.config.fileConfig(config_filename)
+    except ConfigParser.NoSectionError, e:
+        section = e.section
+        print >> sys.stderr, "E: Missing [%s] section in config file" % section
+        return 1
 
-    # initialise logging
-    twisted_log.startLogging(sys.stdout)
-    configure_logging()
     log.debug('Starting up')
 
     # initialise Twitter API connection
