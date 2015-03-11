@@ -23,8 +23,8 @@ class MPsConfig(set):
     """Subclass of set containing MPs to check."""
     def __init__(self, parser, relpath):
         super(MPsConfig, self).__init__()
-        mps_filename = os.path.abspath(
-            os.path.expanduser(parser.get('mps', 'file', {'here': relpath})))
+        mps_filename = os.path.abspath(os.path.expanduser(
+            parser.get('mps', 'file', vars={'here': relpath})))
         for line in codecs.open(mps_filename, 'r', 'utf-8'):
             line = line.strip()
             if line and not line.startswith('#'):

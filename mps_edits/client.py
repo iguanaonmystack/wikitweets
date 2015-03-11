@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 def configure_logging():
     """Set up logger, handler, and formatter."""
-    log.setLevel(logging.DEBUG)
+    log.setLevel(logging.INFO)
     # create console handler and set level to debug
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.DEBUG)
@@ -28,12 +28,17 @@ def configure_logging():
 
 class EditsListener(irc.IRCClient):
     """IRC bot that listens to wikipedia edits."""
+    # edit message looks like this:
+    # u'\x0314[[\x0307Darin Erstad\x0314]]\x034 \x0310 \x0302http://en.wikipedia.org/w/index.php?diff=650841539&oldid=650491223\x03 \x035*\x03 \x0303Erik255\x03 \x035*\x03 (+2) \x0310\x03'
     edit_re = re.compile(
         r'^\x0314\[\[\x0307'    # <grey>[[<yellow>
         r'([^\x03]*)'           # Article name
         r'\x0314\]\]'           # <grey>]]
         r'\x034 \x0310 \x0302'  # <?><?><blue>
-        r'([^\x03]*)')          # Diff URI
+        r'([^\x03]*)'           # Diff URI
+        r'\x03 \x035\*\x03 \x0303' # <red><literal *><green>
+        r'([^\x03]*)'           # User name or IP address
+    )
     ip_re = re.compile(
         r'^([0-9]{1,3}\.){3}[0-9]{1,3}$') # TODO - IPv6
 
@@ -64,14 +69,15 @@ class EditsListener(irc.IRCClient):
 
         if user == 'rc-pmtpa':
             # TODO - check for channel ops instead
-            log.debug(u"Incoming message: %s", msg)
+            log.debug(u"Incoming message: %r", msg)
             m = self.edit_re.match(msg)
             if m is not None:
                 article = m.group(1)
                 diffuri = m.group(2)
-                author = '[unknown]' # TODO
-                log.debug(u"Noticed edit of %s", article)
+                author = m.group(3)
+                log.debug(u"Noticed edit of %s by %s", article, author)
                 if article in self.mps:
+                    log.info(u"MP page %s edited by %s: %s", article, author, diffuri)
                     by_msg = 'anonymously'
                     if not self.ip_re.match(author):
                         by_msg = 'by %s' % author
@@ -126,11 +132,11 @@ def main():
         consumer_secret=cfg.twitter.consumer_secret,
         access_token_key=cfg.twitter.access_token_key,
         access_token_secret=cfg.twitter.access_token_secret)
-    status = twitter_api.VerifyCredentials()
-    log.info("Logged into twitter: %s", status.text)
+    user = twitter_api.VerifyCredentials()
+    log.info("Logged into twitter: %s", user)
 
     # create factory protocol and application
-    f = EditsListenerFactory(cfg.irc.channel, twitter_api)
+    f = EditsListenerFactory(cfg, twitter_api)
 
     # connect factory to this host and port
     reactor.connectTCP(cfg.irc.server, cfg.irc.port, f)
