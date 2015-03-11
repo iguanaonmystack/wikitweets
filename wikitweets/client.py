@@ -17,6 +17,14 @@ from . import config
 
 log = logging.getLogger(__name__)
 
+def shorter(item):
+    """Make a string shorter.
+
+    item -- a unicode string."""
+    if len(item > 2):
+        return item[:-2] + u'\u2026' # ellipsis
+    return item
+
 class EditsListener(irc.IRCClient):
     """IRC bot that listens to wikipedia edits."""
     # edit message looks like this:
@@ -53,58 +61,63 @@ class EditsListener(irc.IRCClient):
         """Called when bot has succesfully signed on to server."""
         log.info('Signed on to IRC')
         self.join(self.factory.channel)
-    
+
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
         user = user.split('!', 1)[0]
         msg = msg.decode('utf-8')
 
-        if user == 'rc-pmtpa':
+        if user != 'rc-pmtpa':
             # TODO - check for channel ops instead
-            log.debug(u"Incoming message: %r", msg)
-            m = self.edit_re.match(msg)
-            if m is not None:
-                article = m.group(1)
-                diffuri = m.group(2)
-                author = m.group(3)
-                log.debug(u"Noticed edit of %s by %s", article, author)
-                if article in self.articles:
-                    log.info(u"[%s] edited by %s: %s", article, author, diffuri)
-                    by_msg = 'anonymously'
-                    if not self.ip_re.match(author):
-                        by_msg = 'by %s' % author
-                    # shorten if >140 chars
-                    message_args = {
-                        'article': article,
-                        'author': author,
-                        'by': by_msg,
-                        'diffuri': u'http://t.co/XXXXXXXXXX',
-                    }
-                    message = self.message_fmt % message_args
-                    def shorter(item):
-                        if len(item > 2):
-                            return item[:-2] + u'\u2026' # ellipsis
-                        return item
-                    while len(message) > 140:
-                        # start truncating arguments
-                        if len(message_args['article']) > 50:
-                            message_args['article'] = shorter(message_args['article'])
-                        if len(message_args['author']) > 10:
-                            message_args['author'] = shorter(message_args['author'])
-                        if len(message_args['by']) > 13:
-                            message_args['by'] = shorter(message_args['by'])
-                        shorter_message = self.message_fmt % message_args
-                        if not len(shorter_message) < len(message):
-                            # Impossibly long body text
-                            shorter_message = shorter_message[140:]
-                        message = shorter_message
-                    # We had to use some fake vars since twitter will mess with
-                    # URIs, so do the actual substitution here.
-                    message_args['diffuri'] = diffuri
-                    message = self.message_fmt % message_args
-                    # Do the actual tweet.
-                    if self.twitter_api is not None:
-                        self.twitter_api.PostUpdate(message)
+            return
+
+        log.debug(u"Incoming message: %r", msg)
+        m = self.edit_re.match(msg)
+        if m is None:
+            # IRC message was not an edit message
+            return
+
+        article = m.group(1)
+        diffuri = m.group(2)
+        author = m.group(3)
+        log.debug(u"Noticed edit of %s by %s", article, author)
+        if article in self.articles:
+            return self._tweet_edited_article(article, author, diffuri)
+
+    def _tweet_edited_article(self, article, author, diffuri):
+        log.info(u"[%s] edited by %s: %s", article, author, diffuri)
+        by_msg = 'anonymously'
+        if not self.ip_re.match(author):
+            by_msg = 'by %s' % author
+        # shorten if >140 chars
+        message_args = {
+            'article': article,
+            'author': author,
+            'by': by_msg,
+            'diffuri': u'http://t.co/XXXXXXXXXX',
+        }
+        message = self.message_fmt % message_args
+        while len(message) > 140:
+            # start truncating arguments
+            if len(message_args['article']) > 50:
+                message_args['article'] = shorter(message_args['article'])
+            if len(message_args['author']) > 10:
+                message_args['author'] = shorter(message_args['author'])
+            if len(message_args['by']) > 13:
+                message_args['by'] = shorter(message_args['by'])
+            shorter_message = self.message_fmt % message_args
+            if not len(shorter_message) < len(message):
+                # Impossibly long body text, time for machete
+                shorter_message = shorter_message[140:]
+            message = shorter_message
+        # We had to use some fake vars since twitter will mess with
+        # URIs, so do the actual substitution here.
+        message_args['diffuri'] = diffuri
+        message = self.message_fmt % message_args
+        # Do the actual tweet.
+        log.log('TWEET', message)
+        if self.twitter_api is not None:
+            self.twitter_api.PostUpdate(message)
 
     def alterCollidedNick(self, nickname):
         """Generate an altered version of a nickname that caused a collision
@@ -165,7 +178,7 @@ def main():
         print >> sys.stderr, e
         print >> sys.stderr, usage()
         return 2
-    
+
     if not os.path.exists(config_filename):
         print >> sys.stderr, "E: Config file <%s> not found" % config_filename
         return 1
