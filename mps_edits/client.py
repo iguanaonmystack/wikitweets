@@ -1,6 +1,7 @@
 """client.py - client for mps_edits"""
 import re
 import sys
+import getopt
 import logging
 
 import twitter # pip install python-twitter
@@ -116,10 +117,32 @@ class EditsListenerFactory(protocol.ClientFactory):
         print "connection failed:", reason
         reactor.stop()
 
+def usage():
+    return """%s - wikipedia IRC bot that tweets certain article changes.
+
+Usage: %s [options] <config_file>
+
+Options:
+    -h, --help      Show this message and exit
+""" % (sys.argv[0], sys.argv[0])
+
 def main():
     """Main entry point for mps_edits"""
+    try:
+        opts, args = getopt.gnu_getopt(sys.argv[1:], 'h', ['help'])
+        for o, a in opts:
+            if o in ('-h', '--help'):
+                print usage()
+                return 0
+        if len(args) != 1:
+            raise getopt.GetoptError('config file required.')
+    except getopt.GetoptError, e:
+        print >> sys.stderr, e
+        print >> sys.stderr, usage()
+        return 2
+
     # initialise config
-    cfg = config.Config(sys.argv[1])
+    cfg = config.Config(args[0])
 
     # initialise logging
     twisted_log.startLogging(sys.stdout)
