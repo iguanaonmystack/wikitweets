@@ -2,6 +2,7 @@
 import os
 import re
 import sys
+import random
 import getopt
 import logging
 import logging.config
@@ -85,7 +86,7 @@ class EditsListener(irc.IRCClient):
     def alterCollidedNick(self, nickname):
         """Generate an altered version of a nickname that caused a collision
         to create an unused related name for subsequent registration."""
-        return nickname + '_'
+        return "%s%05d" % (nickname, random.randint(0, 2**16))
 
 
 class EditsListenerFactory(protocol.ClientFactory):
@@ -126,7 +127,8 @@ def main():
     """Main entry point for wikitweets"""
     do_twitter = True
     try:
-        opts, args = getopt.gnu_getopt(sys.argv[1:], 'h', ['help', 'no-twitter'])
+        opts, args = getopt.gnu_getopt(
+            sys.argv[1:], 'h', ['help', 'no-twitter'])
         for o, a in opts:
             if o in ('-h', '--help'):
                 print usage()
