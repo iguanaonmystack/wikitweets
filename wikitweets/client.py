@@ -53,7 +53,7 @@ class EditsListener(irc.IRCClient):
         """Called when bot has succesfully signed on to server."""
         log.info('Signed on to IRC')
         self.join(self.factory.channel)
-
+    
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
         user = user.split('!', 1)[0]
@@ -73,13 +73,36 @@ class EditsListener(irc.IRCClient):
                     by_msg = 'anonymously'
                     if not self.ip_re.match(author):
                         by_msg = 'by %s' % author
-                    # TODO shorten if >140 chars
-                    message = self.message_fmt % {
+                    # shorten if >140 chars
+                    message_args = {
                         'article': article,
                         'author': author,
                         'by': by_msg,
-                        'diffuri': diffuri,
+                        'diffuri': u'http://t.co/XXXXXXXXXX',
                     }
+                    message = self.message_fmt % message_args
+                    def shorter(item):
+                        if len(item > 2):
+                            return item[:-2] + u'\u2026' # ellipsis
+                        return item
+                    while len(message) > 140:
+                        # start truncating arguments
+                        if len(message_args['article']) > 50:
+                            message_args['article'] = shorter(message_args['article'])
+                        if len(message_args['author']) > 10:
+                            message_args['author'] = shorter(message_args['author'])
+                        if len(message_args['by']) > 13:
+                            message_args['by'] = shorter(message_args['by'])
+                        shorter_message = self.message_fmt % message_args
+                        if not len(shorter_message) < len(message):
+                            # Impossibly long body text
+                            shorter_message = shorter_message[140:]
+                        message = shorter_message
+                    # We had to use some fake vars since twitter will mess with
+                    # URIs, so do the actual substitution here.
+                    message_args['diffuri'] = diffuri
+                    message = self.message_fmt % message_args
+                    # Do the actual tweet.
                     if self.twitter_api is not None:
                         self.twitter_api.PostUpdate(message)
 
