@@ -101,7 +101,7 @@ class EditsListener(irc.IRCClient):
             # start truncating arguments
             if len(message_args['article']) > 50:
                 message_args['article'] = shorter(message_args['article'])
-            if len(message_args['author']) > 10:
+            if len(message_args['author']) > 16:
                 message_args['author'] = shorter(message_args['author'])
             if len(message_args['by']) > 13:
                 message_args['by'] = shorter(message_args['by'])
