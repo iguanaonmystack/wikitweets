@@ -15,6 +15,8 @@ from twisted.python import log as twisted_log
 
 from . import config
 
+TWEET = logging.INFO + 1
+logging.addLevelName(logging.INFO + 1, 'TWEET')
 log = logging.getLogger(__name__)
 
 def shorter(item):
@@ -115,7 +117,7 @@ class EditsListener(irc.IRCClient):
         message_args['diffuri'] = diffuri
         message = self.message_fmt % message_args
         # Do the actual tweet.
-        log.log('TWEET', message)
+        log.log(TWEET, message)
         if self.twitter_api is not None:
             self.twitter_api.PostUpdate(message)
 
@@ -187,8 +189,7 @@ def main():
     try:
         cfg = config.Config(config_filename)
         #twisted_log.startLogging(sys.stdout)
-        logging.addLevelName(logging.INFO + 1, 'TWEET')
-        logging.config.fileConfig(config_filename)
+        logging.config.fileConfig(config_filename, disable_existing_loggers=False)
     except ConfigParser.NoSectionError, e:
         section = e.section
         print >> sys.stderr, "E: Missing [%s] section in config file" % section
