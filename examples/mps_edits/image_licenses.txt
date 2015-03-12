@@ -1,0 +1,8 @@
+Images used on the @mps_edits twitter account:
+
+commons.jpg: CC BY-NC-ND 2.0
+Unchanged from https://www.flickr.com/photos/uk_parliament/2701222068
+
+rosette.jpg: component work from originals:
+ * https://www.flickr.com/photos/lwr/5243351667 (CC BY-NC-SA 2.0)
+ * https://en.wikipedia.org/wiki/File:Wikipedia-logo.png (CC BY-SA 3.0)
