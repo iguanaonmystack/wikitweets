@@ -67,7 +67,7 @@ class EditsListener(irc.IRCClient):
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
         user = user.split('!', 1)[0]
-        msg = msg.decode('utf-8')
+        msg = msg.decode('utf-8', 'ignore')
 
         if user != 'rc-pmtpa':
             # TODO - check for channel ops instead
@@ -119,7 +119,18 @@ class EditsListener(irc.IRCClient):
         # Do the actual tweet.
         log.log(TWEET, message)
         if self.twitter_api is not None:
-            self.twitter_api.PostUpdate(message)
+            exc = None
+            for i in range(3):
+                try:
+                    self.twitter_api.PostUpdate(message)
+                    break
+                except twitter.TwitterError, e:
+                    log.error("Error posting to twitter (attempt %d): %s",
+                        i + 1, e)
+                    exc = e
+            else:
+                # TODO preserve traceback
+                raise exc
 
     def alterCollidedNick(self, nickname):
         """Generate an altered version of a nickname that caused a collision
