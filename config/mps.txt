@@ -1,19 +1,21 @@
-# Dump of Category:UK_MPs_2015–20 on 11 May 2015
+# Dump of Category:UK_MPs_2015–20 on 17 Jun 2016
 Diane Abbott
 Debbie Abrahams
 Nigel Adams
 Adam Afriyie
+Tasmina Ahmed-Sheikh
 Peter Aldous
 Heidi Alexander
 Rushanara Ali
-Lucy Allan (Conservative politician)
+Lucy Allan (politician)
 Graham Allen (politician)
 Heidi Allen
+Rosena Allin-Khan
 David Amess
 David Anderson (British politician)
 Stuart Andrew
 Caroline Ansell
-Ed Argar
+Edward Argar
 Richard Arkless
 Jon Ashworth
 Victoria Atkins
@@ -29,7 +31,7 @@ Kevin Barron
 Gavin Barwell
 Guto Bebb
 Margaret Beckett
-Henry Bellingham (politician)
+Henry Bellingham (Norfolk MP)
 Hilary Benn
 Richard Benyon
 John Bercow
@@ -41,14 +43,14 @@ Clive Betts
 Andrew Bingham
 Mhairi Black
 Ian Blackford
-Kirsty Blackman
 Bob Blackman (politician)
+Kirsty Blackman
 Roberta Blackman-Woods
 Nicola Blackwood
 Tom Blenkinsop
 Paul Blomfield
 Crispin Blunt
-Nicholas Boles
+Nick Boles
 Peter Bone
 Victoria Borwick
 Phil Boswell
@@ -117,7 +119,7 @@ Rosie Cooper
 Yvette Cooper
 Jeremy Corbyn
 Alberto Costa (British politician)
-Ronnie Cowan (Scottish politician)
+Ronnie Cowan (politician)
 Geoffrey Cox (British politician)
 Jo Cox
 Neil Coyle
@@ -136,7 +138,7 @@ Nic Dakin
 Simon Danczuk
 Wayne David
 Byron Davies
-Christopher Davies (politician)
+Christopher Davies (Conservative politician)
 David Davies (Welsh politician)
 Geraint Davies (Labour politician)
 Glyn Davies (British politician)
@@ -153,7 +155,7 @@ Martin Docherty
 Nigel Dodds
 Pat Doherty
 Jeffrey Donaldson
-Stuart Donaldson (politician)
+Stuart Donaldson (Scottish politician)
 Michelle Donelan
 Nadine Dorries
 Steve Double
@@ -169,18 +171,19 @@ James Duddridge
 Michael Dugher
 Iain Duncan Smith
 Alan Duncan
-Philip Dunne (born 1958)
+Philip Dunne (Ludlow MP)
 Mark Durkan
 Angela Eagle
 Maria Eagle
-Jonathan Edwards (politician)
+Jonathan Edwards (Welsh politician)
 Clive Efford
 Julie Elliott
-Tom Elliott
+Tom Elliott (politician)
 Michael Ellis (British politician)
 Jane Ellison
 Louise Ellman
 Tobias Ellwood
+Chris Elmore
 Charlie Elphicke
 Natascha Engel
 Bill Esterson
@@ -196,7 +199,7 @@ Tim Farron
 Marion Fellows
 Suella Fernandes
 Margaret Ferrier
-Frank Field (politician)
+Frank Field (British politician)
 Mark Field
 Jim Fitzpatrick (politician)
 Robert Flello
@@ -212,15 +215,15 @@ Lucy Frazer
 George Freeman (politician)
 Mike Freer
 Richard Fuller (Bedford MP)
+Gill Furniss
 Marcus Fysh
 Roger Gale
-Mike Gapes
 Barry Gardiner
 Edward Garnier
 Mark Garnier
 David Gauke
 Stephen Gethins
-Nusrat Ghani
+Nus Ghani
 Nick Gibb
 Patricia Gibson
 Cheryl Gillan
@@ -235,7 +238,7 @@ Michael Gove
 Patrick Grady
 Richard Graham (politician)
 Helen Grant (politician)
-Peter Grant (British politician)
+Peter Grant (politician)
 James Gray (British politician)
 Neil Gray
 Chris Grayling
@@ -272,7 +275,7 @@ Helen Hayes (politician)
 John Hayes (British politician)
 Sue Hayman
 Oliver Heald
-John Healey
+John Healey (politician)
 James Heappey
 Peter Heaton-Jones
 Chris Heaton-Harris
@@ -302,7 +305,7 @@ John Howell (politician)
 Ben Howlett (politician)
 Lindsay Hoyle
 Nigel Huddleston
-Jeremy Hunt (politician)
+Jeremy Hunt
 Tristram Hunt
 Rupa Huq
 Nick Hurd
@@ -321,8 +324,8 @@ Boris Johnson
 Diana Johnson
 Gareth Johnson
 Jo Johnson
-Andrew Jones (politician)
-David Jones (MP for Clwyd West)
+Andrew Jones (British politician)
+David Jones (Clwyd West MP)
 Gerald Jones
 Graham Jones (politician)
 Helen Jones
@@ -374,21 +377,20 @@ Tim Loughton
 Caroline Lucas
 Ian Lucas
 Karen Lumley
-Steve McCabe (politician)
-Andy McDonald (politician)
-Stewart McDonald (politician)
+Holly Walker-Lynch
 Craig Mackinlay
 David Mackintosh (politician)
 Angus MacNeil
 Fiona Mactaggart
 Justin Madders
-Khalid Mahmood
+Khalid Mahmood (British politician)
 Shabana Mahmood
 Anne Main
 Alan Mak (politician)
 Seema Malhotra
 Kit Malthouse
 John Mann (British politician)
+Scott Mann (politician)
 Rob Marris
 Gordon Marsden
 Rachael Maskell
@@ -397,12 +399,15 @@ Chris Matheson (British politician)
 Tania Mathias
 Theresa May
 Paul Maynard
+Steve McCabe (politician)
 Callum McCaig
 Kerry McCarthy
 Jason McCartney (politician)
 Karl McCartney
 Siobhain McDonagh
-Stuart McDonald (politician)
+Andy McDonald (politician)
+Stewart McDonald (politician)
+Stuart McDonald (Scottish politician)
 Alasdair McDonnell
 John McDonnell (politician)
 Pat McFadden (British politician)
@@ -413,6 +418,7 @@ Liz McInnes
 Catherine McKinnell
 Anne McLaughlin
 Patrick McLoughlin
+Jim McMahon (politician)
 John McNally (politician)
 Stephen McPartland
 Michael Meacher
@@ -434,7 +440,7 @@ Paul Monaghan
 Madeleine Moon
 Penny Mordaunt
 Jessica Morden
-Nicky Morgan (politician)
+Nicky Morgan
 Anne Marie Morris
 David Morris (Conservative politician)
 Grahame Morris
@@ -464,7 +470,7 @@ Kate Osamor
 George Osborne
 Kirsten Oswald
 Albert Owen
-Ian Paisley, Jr.
+Ian Paisley Jr.
 Neil Parish
 Priti Patel
 Owen Paterson
@@ -520,10 +526,9 @@ Joan Ryan
 Alex Salmond
 Antoinette Sandbach
 Liz Saville-Roberts
-Scott Mann (politician)
 Paul Scully
 Andrew Selous
-Naseem Shah
+Naz Shah
 Jim Shannon
 Grant Shapps
 Alok Sharma
@@ -556,7 +561,7 @@ Amanda Solloway
 Anna Soubry
 John Spellar
 Caroline Spelman
-Mark Spencer (politician)
+Mark Spencer (British politician)
 Keir Starmer
 Chris Stephens (politician)
 Andrew Stephenson
@@ -577,7 +582,6 @@ Desmond Swayne
 Hugo Swire
 Robert Syms
 Mark Tami
-Tasmina Ahmed-Sheikh
 Alison Thewliss
 Derek Thomas (politician)
 Gareth Thomas (English politician)
@@ -612,12 +616,11 @@ Martin Vickers
 Theresa Villiers
 Charles Walker (British politician)
 Robin Walker
-Holly Walker-Lynch
 Ben Wallace (politician)
 David Warburton
 Matt Warman
 Angela Watkinson
-Tom Watson (politician)
+Tom Watson (Labour politician)
 Mike Weir (politician)
 Catherine West
 James Wharton
@@ -642,7 +645,7 @@ David Winnick
 Rosie Winterton
 Pete Wishart
 Sarah Wollaston
-Mike Wood (British Conservative politician)
+Mike Wood (Conservative politician)
 John Woodcock (politician)
 William Wragg
 Iain Wright
