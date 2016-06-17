@@ -45,6 +45,7 @@ class EditsListener(irc.IRCClient):
 
     def __init__(self, cfg, twitter_api):
         self.nickname = cfg.irc.nick
+        self.channel = cfg.irc.channel
         self.articles = cfg.articles
         self.message_fmt = cfg.twitter.message_fmt
         self.twitter_api = twitter_api
@@ -62,7 +63,8 @@ class EditsListener(irc.IRCClient):
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
         log.info('Signed on to IRC')
-        self.join(self.factory.channel)
+        log.info('Joining %s', self.channel)
+        self.join(self.channel)
 
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
