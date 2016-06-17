@@ -35,11 +35,11 @@ def get_articles(base, category):
             raise ArticleFetchError(
                 u'Invalid JSON response from Wikipedia: %s' % (e,))
         articles += [article['title'] for article in data['query']['categorymembers']]
-        if 'query-continue' in data:
+        if 'continue' in data:
             # how to fetch the next page of results
             continue_params = [(
                 'cmcontinue',
-                data['query-continue']['categorymembers']['cmcontinue'])]
+                data['continue']['cmcontinue'])]
             continue
         break
     return articles
@@ -78,7 +78,7 @@ def main():
         print >> sys.stderr, e
         return 1
     for article in articles:
-        print article
+        print article.encode('utf-8')
 
 if __name__ == '__main__':
     sys.exit(main())
