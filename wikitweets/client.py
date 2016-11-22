@@ -23,7 +23,7 @@ def shorter(item):
     """Make a string shorter.
 
     item -- a unicode string."""
-    if len(item > 2):
+    if len(item) > 2:
         return item[:-2] + u'\u2026' # ellipsis
     return item
 
