@@ -1,4 +1,3 @@
-# Dump of Category:UK_MPs_2015–20 on 21 Oct 2016
 Diane Abbott
 Debbie Abrahams
 Nigel Adams
@@ -323,6 +322,7 @@ Andrea Jenkyns
 Robert Jenrick
 Alan Johnson
 Boris Johnson
+Caroline Johnson
 Diana Johnson
 Gareth Johnson
 Jo Johnson
@@ -548,7 +548,7 @@ Chris Skidmore
 Dennis Skinner
 Andy Slaughter
 Ruth Smeeth
-Andrew Smith (politician)
+Andrew Smith (British politician)
 Angela C. Smith
 Cat Smith
 Chloe Smith
