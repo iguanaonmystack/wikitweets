@@ -48,7 +48,7 @@ Peter Bone
 Peter Bottomley
 Andrew Bowie (politician)
 Tracy Brabin
-Ben Bradley (politician)
+Ben Bradley
 Karen Bradley
 Ben Bradshaw
 Graham Brady
@@ -168,6 +168,7 @@ Alan Duncan
 Philip Dunne (Ludlow MP)
 Angela Eagle
 Maria Eagle
+Eddie Hughes (UK politician)
 Jonathan Edwards (Welsh politician)
 Clive Efford
 Julie Elliott
@@ -245,6 +246,7 @@ Margaret Greenwood
 Dominic Grieve
 Nia Griffith
 Andrew Griffiths (politician)
+John Grogan (British politician)
 Andrew Gwynne
 Sam Gyimah
 Louise Haigh
@@ -367,6 +369,7 @@ Julian Lewis (politician)
 Ian Liddell-Grainger
 David Lidington
 David Linden (politician)
+Emma Pengelly
 Stephen Lloyd
 Tony Lloyd
 Rebecca Long-Bailey
@@ -436,7 +439,6 @@ Penny Mordaunt
 Jessica Morden
 Nicky Morgan
 Stephen Morgan (politician)
-Stephen Morgan (U.K. politician)
 Anne Marie Morris
 David Morris (Conservative politician)
 Grahame Morris
@@ -470,7 +472,6 @@ Owen Paterson
 Mark Pawsey
 Stephanie Peacock (politician)
 Teresa Pearce
-Emma Pengelly
 Mike Penning
 Matthew Pennycook
 John Penrose
@@ -570,7 +571,7 @@ John Stevenson (British politician)
 Bob Stewart (British Army officer)
 Iain Stewart (politician)
 Rory Stewart
-Jamie Stone (politician)
+Jamie Stone (Scottish politician)
 Gary Streeter
 Wes Streeting
 Mel Stride
